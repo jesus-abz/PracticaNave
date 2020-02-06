@@ -19,9 +19,9 @@ GLFWwindow* window;
 float posXTriangulo = 0.0f, posYTriangulo = 0.0f;
 
 double tiempoActual, tiempoAnterior;
-double velocidadTriangulo = 0.2;
+double velocidadTriangulo = 1.0;
 double rotacionTriangulo = 0.0;
-double velRotaTriangulo = 60.0;
+double velRotaTriangulo = 200.0;
 float anguloTraslacionX = cos(rotacionTriangulo);
 float anguloTraslacionY = sin(rotacionTriangulo);
 /*double movTrianguloX = posXTriangulo * anguloTraslacionX;
@@ -52,8 +52,8 @@ void actualizar() {
     }
     int estadoUp = glfwGetKey(window, GLFW_KEY_UP);
     if (estadoUp == GLFW_PRESS) {
-        posXTriangulo += cos(rotacionTriangulo);
-        posYTriangulo += sin(rotacionTriangulo);
+        posXTriangulo += (velocidadTriangulo * tiempoDiferencial) * cos((rotacionTriangulo + 90.0f) * 3.141592 / 180.0);
+        posYTriangulo += (velocidadTriangulo * tiempoDiferencial) * sin((rotacionTriangulo + 90.0f) * 3.141592 / 180.0);
     }
     int estadoLeft = glfwGetKey(window, GLFW_KEY_LEFT);
     if (estadoLeft == GLFW_PRESS) {
@@ -72,14 +72,15 @@ void dibujar() {
 
     glTranslatef(posXTriangulo, posYTriangulo, 0.0f);
     glRotatef(rotacionTriangulo, 0.0f, 0.0f, 1.0f);
+    glScalef(0.4f, 0.7f, 0.0f);
 
     glBegin(GL_TRIANGLES);
 
     glColor3f(0.6, 0.1, 0.2);
 
     glVertex3f(0.0f, 0.15f, 0.0f);
-    glVertex3f(-0.10f, -0.15f, 0.0f);
-    glVertex3f(0.10f, -0.15f, 0.0f);
+    glVertex3f(-0.15f, -0.15f, 0.0f);
+    glVertex3f(0.15f, -0.15f, 0.0f);
 
     glEnd();
 
